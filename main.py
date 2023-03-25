@@ -1,16 +1,78 @@
-# This is a sample Python script.
+from flask import Flask, render_template,flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_required, login_user,logout_user
+from datetime import datetime
+from Forms.py import RegistrationForm, loginForm
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from werkzeug.security import generate_password_hash, check_password_hash
+
+app = Flask(__name__)
+
+app.config[‘SQLALCHEMY_DATABASE_URL’] = ‘sqlite:///rentuserdb.db’
+app.config[‘SQLALCHEMY_TRACK_MODIFICATIONS’] = False
+db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin, db.Model):
+  email = db.Column(db.String(150), primary_key=True, unique = True, index = True)
+  username = db.Column(db.String(50), index=True, unique=True)
+  password_hash = db.Column(db.String(150))
+  joined_at = db.Column(db.DateTime(), default = datetime.utcnow, index = True)
+
+  def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+  def check_password(self,password):
+      return check_password_hash(self.password_hash,password)
+
+  @login_manager.user_loader
+  def load_user(user_email):
+      return User.get(user_email)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.route('/home')
+def home():
+    return render_template('index.html')
+
+@app.route('/register', methods = ['POST','GET'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username =form.username.data, email = form.email.data)
+        user.set_password(form.password1.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('registration.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email = form.email.data).first()
+        if user is not None and user.check_password(form.password.data):
+            login_user(user)
+            next = request.args.get("next")
+            return redirect(next or url_for('home'))
+        flash('Invalid email address or Password.')
+    return render_template('login.html', form=form)
+
+@app.route("/forbidden",methods=['GET', 'POST'])
+@login_required
+def protected():
+    return redirect(url_for('forbidden.html'))
+
+@app.route("/logout")
+# @login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
