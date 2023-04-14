@@ -10,9 +10,11 @@ import sqlite3
 
 app = Flask(__name__, template_folder='Scripts/Templates')
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///rentuserdb.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///rentuser.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+app.app_context().push()
 
 import os
 SECRET_KEY = os.urandom(32)
@@ -24,7 +26,7 @@ print("database opened")
 #conn.execute("create table Users (username TEXT UNIQUE NOT NULL, email TEXT UNIQUE NOT NULL PRIMARY KEY, password TEXT NOT NULL)")
 #print("table users created")
 #Testing that data added successfully
-conn.execute("INSERT INTO Users (username,email,password) VALUES ('user1','bill@gmail.com', 'password1' )")
+#conn.execute("INSERT INTO Users (username,email,password) VALUES ('user1','bill@gmail.com', 'password1' )")
 cursor = conn.execute("SELECT username, email,password from Users")
 for row in cursor:
     print("username = ", row[0])
@@ -50,10 +52,22 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def get_id(self):
+        return self.email
+
+
+db.create_all()
+
+
+
+#@login_manager.user_loader
+#def load_user(User_email):
+#    return User.get_id()
 
 @login_manager.user_loader
-def load_user(user_email):
-    return User.get(user_email)
+def load_user(User_email):
+    return User.query.get(User_email)
+
 
 
 @app.route('/home')
@@ -65,20 +79,24 @@ def home():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        Users = User(username=form.username.data, email=form.email.data, password_hash = form.password1.data)  #email = form.email.data
-        Users.set_password(form.password1.data)
-        db.session.add(Users)
+        currentuser = User(username=form.username.data, email=form.email.data)  #email = form.email.data
+        currentuser.set_password(form.password1.data)
+        #currentuser.set_password(currentuser.password_hash)
+        db.session.add(currentuser)
         db.session.commit()
 
         conn = sqlite3.connect('rentuser.db')
-        print("database opened")
-        #conn.execute("INSERT INTO Users ( username, email, password_hash, joined_at")
-        cursor = conn.execute("SELECT * from Users")
-        for row in cursor:
-            print("username = ", row[0])
-            print("email = ", row[1])
-            print("password = ", row[2])
-        print("Operation done successfully")
+        print("database opened to register user")
+        #conn.execute("INSERT INTO Users ( username, email, password_hash)")
+        conn.execute("INSERT INTO Users ( username, email, password) VALUES (?, ?, ?)",
+                     (form.username.data, form.email.data, currentuser.password_hash))
+
+        #cursor = conn.execute("SELECT * from Users")
+        #for row in cursor:
+        #    print("username = ", row[0])
+        #    print("email = ", row[1])
+        #    print("password = ", row[2])
+        #print("Operation done successfully")
         conn.close()
         return redirect(url_for('login'))
     return render_template('Registration.html', form=form)
