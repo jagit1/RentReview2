@@ -74,6 +74,10 @@ def load_user(User_email):
 def home():
     return render_template('index.html')
 
+@app.route('/test')
+def bootstraptest():
+    return render_template('AccountCreationBootstrapPage.html')
+
 #need to figure out how to add these users to the database and check they are validatining against the entries in there
 @app.route('/register', methods=['POST', 'GET'])
 def register():
