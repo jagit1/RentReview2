@@ -86,15 +86,32 @@
   </head>
   <body >
 
+  <div>
+  <!--
+  <a href="{{ url_for('home') }}">Home</a>
+  {% if current_user.is_anonymous %}
+  <a href="{{ url_for('login') }}">Login</a>
+  {% else %}
+  <p>Welcome {{current_user.username}}</p>
+  <a href="{{ url_for('logout') }}">Logout</a>
+  {% endif %}
+  -->
+</div>
+
   <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
-      <p>Search and Post Reviews of Rental Properties</p>
+      <!--<p>Search and Post Reviews of Rental Properties</p>-->
       <ul class="nav me-auto">
-
+      <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link link-dark px-2">Search and Post Reviews of Rental Properties</a></li>
       </ul>
       <ul class="nav">
+        {% if current_user.is_anonymous %}
         <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link link-dark px-2">Login</a></li>
         <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link link-dark px-2">Create an Account</a></li>
+        {% else %}
+        <li class="nav-item"><p class="nav-link link-dark px-2">Welcome {{current_user.username}}</p></li>
+        <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link link-dark px-2">Logout</a></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
