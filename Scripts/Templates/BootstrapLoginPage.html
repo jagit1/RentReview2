@@ -119,24 +119,10 @@
     <div class="container" style="background-color:white">
     <!--<h1 class="visually-hidden">Heroes examples</h1>-->
   <div class="px-4 py-5 my-5 text-center">
-    <h2 class="display-5 fw-bold">Create account</h2>
+    <h2 class="display-5 fw-bold">Login</h2>
     <div class="col-lg-6 mx-auto">
-      <form action="" method="post">
+<form action="" method="post">
    {{ form.hidden_tag() }}
-   <div>
-      {{ form.username(placeholder="username",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 10px 10px ;
-      margin: 3px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-      {% for error in form.username.errors %}
-      <p>{{ error }}</p>
-      {% endfor %}
-   </div>
-   <br>
    <div>
       {{ form.email(placeholder="email",
       style='width: 50%;
@@ -152,7 +138,7 @@
    </div>
    <br>
    <div>
-      {{ form.password1(placeholder="password",
+      {{ form.password(placeholder="password",
       style='width: 50%;
       font-weight: bold;
       padding: 10px 10px ;
@@ -160,95 +146,27 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box') }}
-      {% for error in form.password1.errors %}
+      {% for error in form.password.errors %}
       <p>{{ error }}</p>
       {% endfor %}
    </div>
-   <br>
-   <div>
-      {{ form.password2(placeholder="Confirm password",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 10px 10px ;
-      margin: 3px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-      {% for error in form.password2.errors %}
-      <p>{{ error }}</p>
-      {% endfor %}
-   </div>
-   <br>
-   <div>{{ form.submit(
-      style ='background-color: #EC0909;
+   <p>{{ form.remember() }} {{ form.remember.label }}</p>
+   <p>{{ form.submit(style ='background-color: #EC0909;
       color: white;
       width: 50%;
-      padding: 10px 10px;
-      margin: 3px 0;
+      padding: 14px 20px;
+      margin: 8px 0;
       border: none;
       border-radius: 4px') }}
-   </div>
+   </p>
 </form>
 <p></p>
-<a href="{{ url_for('login') }}"><button style = "background-color: #EC0909; color: white; margin: 0 auto; width: 50%; padding: 10px 10px; margin 3px 0; border: none; border-radius: 4px "><p style = "color: white; margin: 0 auto;">Already have an account?</p></button></a>
+<a href="{{ url_for('register') }}"><button style = "background-color: #EC0909; color: white; margin: 0 auto; width: 50%; padding: 10px 10px; margin 3px 0; border: none; border-radius: 4px "><p style = "color: white; margin: 0 auto;">Need to Create an Account?</p></button></a>
 
-      <!--<p class="lead mb-4">Leave and Search Reviews for Rental Properties.</p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Search Reviews</button>
-        <button type="button" onclick="{{ url_for('register') }}" class="btn btn-outline-secondary btn-lg px-4"><a href="{{ url_for('register') }}" class="nav-link px-2 text-muted">Leave a Review</a></button>
-      </div>-->
     </div>
   </div>
 
   </div>
-    <!--<h1 class="display-5 fw-bold">Create Your Account Here</h1>
-     Syntax for form adapted from Bootstrap here: https://getbootstrap.com/docs/4.2/components/forms/
-
-      <div class="msg">{{ msg }}</div>
-
-    <div class="form-group">
-    <label for="useremail"></label>
-    <input type="text" class="form-control" name="email" id="useremail" aria-describedby="email" placeholder="Enter your email" required>
-
-    </div>
-    <div class="form-group">
-    <label for="userfirstname"></label>
-    <input type="text" class="form-control" name="firstname" id="userfirstname" placeholder="Enter Your First Name" required>
-    </div>
-
-
-    <div class="form-group">
-    <label for="usersurname"></label>
-    <input type="text" class="form-control" name="surname" id="usersurname" placeholder="Enter Your Surname" required>
-    </div>
-
-
-    <div class="form-group">
-    <label for="userpassword"></label>
-    <input type="text" class="form-control" name="password" id="userpassword" placeholder="Enter Your Password" required>
-    </div>
-
-
-    <div class="form-group">
-    <label for="userlandlord"></label>
-    <input type="text" class="form-control" name="landlord" id="userlandlord" placeholder="Are You a Landlord: Enter Y/N" required>
-    </div>
-
-
-    <div class="form-group">
-    <label for="usertenant"></label>
-    <input type="text" class="form-control" name="tenant" id="usertenant" placeholder="Are You a Tenant: Enter Y/N" required>
-    </div>
-
-
-
-
-  </form>-->
-
-
-
-
-
 
   <div class="b-example-divider" style="background-color:#EC0909"></div>
 
@@ -264,12 +182,8 @@
     </footer>
   </div>
 
-  <!--<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>-->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
 
   </body>
 </html>

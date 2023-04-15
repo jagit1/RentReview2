@@ -72,11 +72,12 @@ def load_user(User_email):
 
 @app.route('/home')
 def home():
-    return render_template('index.html')
+    return render_template('Homepage.html')
 
 @app.route('/test')
 def bootstraptest():
     return render_template('AccountCreationBootstrapPage.html')
+
 
 #need to figure out how to add these users to the database and check they are validatining against the entries in there
 @app.route('/register', methods=['POST', 'GET'])
@@ -103,7 +104,7 @@ def register():
         #print("Operation done successfully")
         conn.close()
         return redirect(url_for('login'))
-    return render_template('Registration.html', form=form)
+    return render_template('AccountCreationBootstrapPage.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -117,7 +118,7 @@ def login():
             next = request.args.get("next")
             return redirect(next or url_for('home'))
         flash('Invalid email address or Password.')
-    return render_template('Login.html', form=form)
+    return render_template('BootstrapLoginPage.html', form=form)
 
 
 @app.route("/forbidden", methods=['GET', 'POST'])
