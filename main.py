@@ -124,7 +124,13 @@ def login():
 @app.route("/forbidden", methods=['GET', 'POST'])
 @login_required
 def protected():
-    return redirect(url_for('forbidden.html'))
+    return render_template('Forbidden.html')
+
+#Changed above from redirect to render template
+
+@app.route("/reviews", methods=['GET', 'POST'])
+def reviews():
+    return render_template('Review Page Template.html')
 
 
 @app.route("/logout")
