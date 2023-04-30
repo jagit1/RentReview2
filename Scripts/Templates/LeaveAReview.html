@@ -125,14 +125,87 @@
   </header>
   <div class="b-example-divider" style="background-color:#EC0909"></div>
   <div class="container" style="background-color:white">
+
     <h1 class="visually-hidden">Heroes examples</h1>
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Welcome to Rentreview.ie</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Leave and Search Reviews for Rental Properties.</p>
+      <p class="lead mb-4">Leave Your Review Below</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Search Reviews</button>
-        <button type="button" onclick="{{ url_for('leavereview') }}" class="btn btn-outline-secondary btn-lg px-4"><a href="{{ url_for('leavereview') }}" class="nav-link px-2 text-muted">Leave a Review</a></button>
+
+        <div class="px-4 py-5 my-5 text-center">
+    <h2 class="display-5 fw-bold">Create account</h2>
+    <div class="col-lg-6 mx-auto">
+      <form action="" method="post">
+   {{ form.hidden_tag() }}
+   <div>
+      {{ form.username(placeholder="username",
+      style='width: 50%;
+      font-weight: bold;
+      padding: 10px 10px ;
+      margin: 3px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box') }}
+      {% for error in form.username.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>
+      {{ form.email(placeholder="email",
+      style='width: 50%;
+      font-weight: bold;
+      padding: 10px 10px ;
+      margin: 3px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box') }}
+      {% for error in form.email.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>
+      {{ form.password1(placeholder="password",
+      style='width: 50%;
+      font-weight: bold;
+      padding: 10px 10px ;
+      margin: 3px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box') }}
+      {% for error in form.password1.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>
+      {{ form.password2(placeholder="Confirm password",
+      style='width: 50%;
+      font-weight: bold;
+      padding: 10px 10px ;
+      margin: 3px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box') }}
+      {% for error in form.password2.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>{{ form.submit(
+      style ='background-color: #EC0909;
+      color: white;
+      width: 50%;
+      padding: 10px 10px;
+      margin: 3px 0;
+      border: none;
+      border-radius: 4px') }}
+   </div>
+</form>
+        <!--<button type="button" class="btn btn-primary btn-lg px-4 gap-3">Search Reviews</button>
+        <button type="button" onclick="{{ url_for('register') }}" class="btn btn-outline-secondary btn-lg px-4"><a href="{{ url_for('register') }}" class="nav-link px-2 text-muted">Leave a Review</a></button>-->
       </div>
     </div>
   </div>
@@ -144,7 +217,7 @@
   <footer class="py-3 my-4" >
     <ul class="nav justify-content-center border-bottom pb-3 mb-3" >
       <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link px-2 text-muted" style ="color:white">Login</a></li>
-      <li class="nav-item"><a href="{{ url_for('leavereview') }}" class="nav-link px-2 text-muted">Leave a Review</a></li>
+      <li class="nav-item"><a href="{{ url_for('register') }}" class="nav-link px-2 text-muted">Leave a Review</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Search Reviews</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Contact Us</a></li>
     </ul>

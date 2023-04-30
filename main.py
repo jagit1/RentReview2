@@ -78,6 +78,43 @@ def home():
 def bootstraptest():
     return render_template('AccountCreationBootstrapPage.html')
 
+@app.route('/generaltemplate')
+def generaltemplate():
+    return render_template('General template for all pages.html')
+
+@app.route('/leavereview')
+@login_required
+def leavereview():
+    return render_template('LeaveAReview.html')
+
+#route here to input reviws to the new reviews database
+#@app.route('/inputreview', methods=['POST', 'GET'])
+#@login_required
+#def inputreview():
+#    form = ReviewForm()
+#    if form.validate_on_submit():
+#        currentuser = User(username=form.username.data, email=form.email.data)  #email = form.email.data
+#        currentuser.set_password(form.password1.data)
+#        #currentuser.set_password(currentuser.password_hash)
+#        db.session.add(currentuser)
+#        db.session.commit()
+
+#        conn = sqlite3.connect('rentuser.db')
+#        print("database opened to register user")
+#        #conn.execute("INSERT INTO Users ( username, email, password_hash)")
+#        conn.execute("INSERT INTO Users ( username, email, password) VALUES (?, ?, ?)",
+#                     (form.username.data, form.email.data, currentuser.password_hash))
+
+#        #cursor = conn.execute("SELECT * from Users")
+#        #for row in cursor:
+        #    print("username = ", row[0])
+        #    print("email = ", row[1])
+        #    print("password = ", row[2])
+        #print("Operation done successfully")
+#        conn.close()
+#        return redirect(url_for('login'))
+#    return render_template('AccountCreationBootstrapPage.html', form=form)
+
 
 #need to figure out how to add these users to the database and check they are validatining against the entries in there
 @app.route('/register', methods=['POST', 'GET'])
@@ -130,7 +167,7 @@ def protected():
 
 @app.route("/reviews", methods=['GET', 'POST'])
 def reviews():
-    return render_template('Review Page Template.html')
+    return render_template('Review Search Results Page Template.html')
 
 
 @app.route("/logout")
