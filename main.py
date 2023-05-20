@@ -2,7 +2,7 @@ from flask import Flask, render_template, flash, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from datetime import datetime
-from Forms import RegistrationForm, LoginForm
+from Forms import RegistrationForm, LoginForm, ReviewForm
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import sqlite3
@@ -85,7 +85,8 @@ def generaltemplate():
 @app.route('/leavereview')
 @login_required
 def leavereview():
-    return render_template('LeaveAReview.html')
+    form = ReviewForm()
+    return render_template('LeaveAReview2.html', form = form)
 
 #route here to input reviws to the new reviews database
 #@app.route('/inputreview', methods=['POST', 'GET'])
